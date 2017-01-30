@@ -13,7 +13,6 @@ class Container
     protected concretions = [];
     protected instances = [];
     protected reflectors = [];
-    protected singletons = [];
 
     public function make(class_name)
     {
@@ -68,7 +67,7 @@ class Container
 
     protected function getConcrete(class_name)
     {
-        if isset this->bindings[class_name] {
+        if is_string(class_name) && isset this->bindings[class_name] {
             return this->bindings[class_name];
         }
 
@@ -119,7 +118,7 @@ class Container
 
     protected function getReflector(class_name)
     {
-        if isset this->reflectors[class_name] {
+        if is_string(class_name) && isset this->reflectors[class_name] {
             return this->reflectors[class_name];
         }
 
@@ -143,35 +142,10 @@ class Container
             return;
         }
 
-        switch (true) {
-            case resolver instanceof Closure:
-            case is_a(resolver, class_name, true):
-                let this->bindings[class_name] = resolver;
-
-                return;
-            default:
-                break;
-        }
-
-        throw new InvalidArgumentException();
-    }
-
-    public function singleton(class_name, resolver)
-    {
-        if (is_a(resolver, class_name, false)) {
-            let this->instances[class_name] = resolver;
+        if resolver instanceof Closure || is_a(resolver, class_name, true) {
+            let this->bindings[class_name] = resolver;
 
             return;
-        }
-
-        switch (true) {
-            case resolver instanceof Closure:
-            case is_a(resolver, class_name, true):
-                let this->bindings[class_name] = resolver;
-
-                return;
-            default:
-                break;
         }
 
         throw new InvalidArgumentException();
