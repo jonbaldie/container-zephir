@@ -150,4 +150,11 @@ class Container
 
         throw new InvalidArgumentException();
     }
+
+    public function factory(class_name)
+    {
+        return function () use (class_name) {
+            return this->make(class_name);
+        };
+    }
 }
