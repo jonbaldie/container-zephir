@@ -381,10 +381,10 @@ PHP_METHOD(Container_Container, isAbstract) {
 
 PHP_METHOD(Container_Container, bind) {
 
-	zend_bool _2;
+	zend_bool _3;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL;
-	zval *class_name, class_name_sub, *resolver, resolver_sub, __$false, __$true, _0, _3, _4;
+	zval *class_name, class_name_sub, *resolver, resolver_sub, __$false, __$true, _0, _2, _4;
 	ZEPHIR_INIT_THIS();
 
 	ZVAL_UNDEF(&class_name_sub);
@@ -392,7 +392,7 @@ PHP_METHOD(Container_Container, bind) {
 	ZVAL_BOOL(&__$false, 0);
 	ZVAL_BOOL(&__$true, 1);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_4);
 
 	ZEPHIR_MM_GROW();
@@ -406,13 +406,13 @@ PHP_METHOD(Container_Container, bind) {
 		zephir_update_property_array(this_ptr, SL("instances"), class_name, resolver TSRMLS_CC);
 		RETURN_MM_NULL();
 	}
-	_2 = zephir_instance_of_ev(resolver, zend_ce_closure TSRMLS_CC);
-	if (!(_2)) {
-		ZEPHIR_CALL_FUNCTION(&_3, "is_a", &_1, 5, resolver, class_name, &__$true);
-		zephir_check_call_status();
-		_2 = zephir_is_true(&_3);
+	ZEPHIR_CALL_FUNCTION(&_2, "is_a", &_1, 5, resolver, class_name, &__$true);
+	zephir_check_call_status();
+	_3 = zephir_is_true(&_2);
+	if (!(_3)) {
+		_3 = zephir_instance_of_ev(resolver, zend_ce_closure TSRMLS_CC);
 	}
-	if (_2) {
+	if (_3) {
 		zephir_update_property_array(this_ptr, SL("bindings"), class_name, resolver TSRMLS_CC);
 		RETURN_MM_NULL();
 	}

@@ -142,7 +142,7 @@ class Container
             return;
         }
 
-        if resolver instanceof Closure || is_a(resolver, class_name, true) {
+        if is_a(resolver, class_name, true) || resolver instanceof Closure {
             let this->bindings[class_name] = resolver;
 
             return;
