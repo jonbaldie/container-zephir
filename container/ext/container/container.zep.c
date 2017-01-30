@@ -37,8 +37,6 @@ ZEPHIR_INIT_CLASS(Container_Container) {
 
 	zend_declare_property_null(container_container_ce, SL("reflectors"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(container_container_ce, SL("singletons"), ZEND_ACC_PROTECTED TSRMLS_CC);
-
 	container_container_ce->create_object = zephir_init_properties_Container_Container;
 	return SUCCESS;
 
@@ -71,7 +69,7 @@ PHP_METHOD(Container_Container, make) {
 	}
 	if (_0) {
 		zephir_read_property(&_2$$3, this_ptr, SL("instances"), PH_NOISY_CC | PH_READONLY);
-		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 21 TSRMLS_CC);
+		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 20 TSRMLS_CC);
 		RETURN_CTOR(_3$$3);
 	}
 	ZEPHIR_CALL_METHOD(&concrete, this_ptr, "getconcrete", NULL, 0, class_name);
@@ -122,7 +120,7 @@ PHP_METHOD(Container_Container, build) {
 	}
 	if (_0) {
 		zephir_read_property(&_2$$3, this_ptr, SL("instances"), PH_NOISY_CC | PH_READONLY);
-		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 42 TSRMLS_CC);
+		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 41 TSRMLS_CC);
 		RETURN_CTOR(_3$$3);
 	}
 	if (zephir_instance_of_ev(class_name, zend_ce_closure TSRMLS_CC)) {
@@ -139,7 +137,7 @@ PHP_METHOD(Container_Container, build) {
 		object_init_ex(&_5$$5, spl_ce_InvalidArgumentException);
 		ZEPHIR_CALL_METHOD(NULL, &_5$$5, "__construct", NULL, 3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_5$$5, "container/container.zep", 54 TSRMLS_CC);
+		zephir_throw_exception_debug(&_5$$5, "container/container.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -167,23 +165,28 @@ PHP_METHOD(Container_Container, build) {
 
 PHP_METHOD(Container_Container, getConcrete) {
 
-	zval *class_name, class_name_sub, _0, _1$$3, _2$$3;
+	zend_bool _0;
+	zval *class_name, class_name_sub, _1, _2$$3, _3$$3;
 	ZEPHIR_INIT_THIS();
 
 	ZVAL_UNDEF(&class_name_sub);
-	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
 
 	zephir_fetch_params(0, 1, 0, &class_name);
 
 
 
-	zephir_read_property(&_0, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
-	if (zephir_array_isset(&_0, class_name)) {
-		zephir_read_property(&_1$$3, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
-		zephir_array_fetch(&_2$$3, &_1$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 72 TSRMLS_CC);
-		RETURN_CTORW(_2$$3);
+	_0 = Z_TYPE_P(class_name) == IS_STRING;
+	if (_0) {
+		zephir_read_property(&_1, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
+		_0 = zephir_array_isset(&_1, class_name);
+	}
+	if (_0) {
+		zephir_read_property(&_2$$3, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
+		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 71 TSRMLS_CC);
+		RETURN_CTORW(_3$$3);
 	}
 	RETVAL_ZVAL(class_name, 1, 0);
 	return;
@@ -213,7 +216,7 @@ PHP_METHOD(Container_Container, resolveDependencies) {
 
 	ZEPHIR_INIT_VAR(&results);
 	array_init(&results);
-	zephir_is_iterable(&dependencies, 0, "container/container.zep", 93);
+	zephir_is_iterable(&dependencies, 0, "container/container.zep", 92);
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&dependencies), _0)
 	{
 		ZEPHIR_INIT_NVAR(&dependency);
@@ -223,11 +226,11 @@ PHP_METHOD(Container_Container, resolveDependencies) {
 		if (Z_TYPE_P(&class_name) == IS_NULL) {
 			ZEPHIR_CALL_METHOD(&_1$$4, this_ptr, "resolveprimitive", &_2, 0, &dependency);
 			zephir_check_call_status();
-			zephir_array_append(&results, &_1$$4, PH_SEPARATE, "container/container.zep", 87);
+			zephir_array_append(&results, &_1$$4, PH_SEPARATE, "container/container.zep", 86);
 		} else {
 			ZEPHIR_CALL_METHOD(&_3$$5, this_ptr, "resolveclass", &_4, 0, &dependency);
 			zephir_check_call_status();
-			zephir_array_append(&results, &_3$$5, PH_SEPARATE, "container/container.zep", 89);
+			zephir_array_append(&results, &_3$$5, PH_SEPARATE, "container/container.zep", 88);
 		}
 	} ZEND_HASH_FOREACH_END();
 	ZEPHIR_INIT_NVAR(&dependency);
@@ -261,7 +264,7 @@ PHP_METHOD(Container_Container, resolvePrimitive) {
 	object_init_ex(&_1, spl_ce_InvalidArgumentException);
 	ZEPHIR_CALL_METHOD(NULL, &_1, "__construct", NULL, 3);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(&_1, "container/container.zep", 102 TSRMLS_CC);
+	zephir_throw_exception_debug(&_1, "container/container.zep", 101 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -308,7 +311,7 @@ PHP_METHOD(Container_Container, resolveClass) {
 				zephir_check_call_status();
 				RETURN_MM();
 			}
-			zephir_throw_exception_debug(&e, "container/container.zep", 116 TSRMLS_CC);
+			zephir_throw_exception_debug(&e, "container/container.zep", 115 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -318,26 +321,31 @@ PHP_METHOD(Container_Container, resolveClass) {
 
 PHP_METHOD(Container_Container, getReflector) {
 
+	zend_bool _0;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *class_name, class_name_sub, _0, reflector, _1$$3, _2$$3;
+	zval *class_name, class_name_sub, _1, reflector, _2$$3, _3$$3;
 	ZEPHIR_INIT_THIS();
 
 	ZVAL_UNDEF(&class_name_sub);
-	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&reflector);
-	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &class_name);
 
 
 
-	zephir_read_property(&_0, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
-	if (zephir_array_isset(&_0, class_name)) {
-		zephir_read_property(&_1$$3, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
-		zephir_array_fetch(&_2$$3, &_1$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 123 TSRMLS_CC);
-		RETURN_CTOR(_2$$3);
+	_0 = Z_TYPE_P(class_name) == IS_STRING;
+	if (_0) {
+		zephir_read_property(&_1, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
+		_0 = zephir_array_isset(&_1, class_name);
+	}
+	if (_0) {
+		zephir_read_property(&_2$$3, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
+		zephir_array_fetch(&_3$$3, &_2$$3, class_name, PH_NOISY | PH_READONLY, "container/container.zep", 122 TSRMLS_CC);
+		RETURN_CTOR(_3$$3);
 	}
 	ZEPHIR_INIT_VAR(&reflector);
 	object_init_ex(&reflector, zephir_get_internal_ce(SL("reflectionclass")));
@@ -398,70 +406,21 @@ PHP_METHOD(Container_Container, bind) {
 		zephir_update_property_array(this_ptr, SL("instances"), class_name, resolver TSRMLS_CC);
 		RETURN_MM_NULL();
 	}
-	do {
-		_2 = 1;
+	_2 = zephir_instance_of_ev(resolver, zend_ce_closure TSRMLS_CC);
+	if (!(_2)) {
 		ZEPHIR_CALL_FUNCTION(&_3, "is_a", &_1, 5, resolver, class_name, &__$true);
 		zephir_check_call_status();
-		if (_2 == zephir_instance_of_ev(resolver, zend_ce_closure TSRMLS_CC) || ZEPHIR_IS_FALSE(&_3)) {
-			zephir_update_property_array(this_ptr, SL("bindings"), class_name, resolver TSRMLS_CC);
-			RETURN_MM_NULL();
-		}
-		break;
-	} while(0);
-
-	ZEPHIR_INIT_VAR(&_4);
-	object_init_ex(&_4, spl_ce_InvalidArgumentException);
-	ZEPHIR_CALL_METHOD(NULL, &_4, "__construct", NULL, 3);
-	zephir_check_call_status();
-	zephir_throw_exception_debug(&_4, "container/container.zep", 156 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
-	return;
-
-}
-
-PHP_METHOD(Container_Container, singleton) {
-
-	zend_bool _2;
-	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_fcall_cache_entry *_1 = NULL;
-	zval *class_name, class_name_sub, *resolver, resolver_sub, __$false, __$true, _0, _3, _4;
-	ZEPHIR_INIT_THIS();
-
-	ZVAL_UNDEF(&class_name_sub);
-	ZVAL_UNDEF(&resolver_sub);
-	ZVAL_BOOL(&__$false, 0);
-	ZVAL_BOOL(&__$true, 1);
-	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_3);
-	ZVAL_UNDEF(&_4);
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 0, &class_name, &resolver);
-
-
-
-	ZEPHIR_CALL_FUNCTION(&_0, "is_a", &_1, 5, resolver, class_name, &__$false);
-	zephir_check_call_status();
-	if (zephir_is_true(&_0)) {
-		zephir_update_property_array(this_ptr, SL("instances"), class_name, resolver TSRMLS_CC);
+		_2 = zephir_is_true(&_3);
+	}
+	if (_2) {
+		zephir_update_property_array(this_ptr, SL("bindings"), class_name, resolver TSRMLS_CC);
 		RETURN_MM_NULL();
 	}
-	do {
-		_2 = 1;
-		ZEPHIR_CALL_FUNCTION(&_3, "is_a", &_1, 5, resolver, class_name, &__$true);
-		zephir_check_call_status();
-		if (_2 == zephir_instance_of_ev(resolver, zend_ce_closure TSRMLS_CC) || ZEPHIR_IS_FALSE(&_3)) {
-			zephir_update_property_array(this_ptr, SL("bindings"), class_name, resolver TSRMLS_CC);
-			RETURN_MM_NULL();
-		}
-		break;
-	} while(0);
-
 	ZEPHIR_INIT_VAR(&_4);
 	object_init_ex(&_4, spl_ce_InvalidArgumentException);
 	ZEPHIR_CALL_METHOD(NULL, &_4, "__construct", NULL, 3);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(&_4, "container/container.zep", 177 TSRMLS_CC);
+	zephir_throw_exception_debug(&_4, "container/container.zep", 151 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -469,60 +428,52 @@ PHP_METHOD(Container_Container, singleton) {
 
 zend_object *zephir_init_properties_Container_Container(zend_class_entry *class_type TSRMLS_DC) {
 
-		zval _0, _2, _4, _6, _8, _10, _1$$3, _3$$4, _5$$5, _7$$6, _9$$7, _11$$8;
+		zval _0, _2, _4, _6, _8, _1$$3, _3$$4, _5$$5, _7$$6, _9$$7;
 		ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&_8);
-	ZVAL_UNDEF(&_10);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_5$$5);
 	ZVAL_UNDEF(&_7$$6);
 	ZVAL_UNDEF(&_9$$7);
-	ZVAL_UNDEF(&_11$$8);
 
 		ZEPHIR_MM_GROW();
 	
 	{
 		zval local_this_ptr, *this_ptr = &local_this_ptr;
 		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
-		zephir_read_property(&_0, this_ptr, SL("singletons"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_0, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
 		if (Z_TYPE_P(&_0) == IS_NULL) {
 			ZEPHIR_INIT_VAR(&_1$$3);
 			array_init(&_1$$3);
-			zephir_update_property_zval(this_ptr, SL("singletons"), &_1$$3);
+			zephir_update_property_zval(this_ptr, SL("reflectors"), &_1$$3);
 		}
-		zephir_read_property(&_2, this_ptr, SL("reflectors"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_2, this_ptr, SL("instances"), PH_NOISY_CC | PH_READONLY);
 		if (Z_TYPE_P(&_2) == IS_NULL) {
 			ZEPHIR_INIT_VAR(&_3$$4);
 			array_init(&_3$$4);
-			zephir_update_property_zval(this_ptr, SL("reflectors"), &_3$$4);
+			zephir_update_property_zval(this_ptr, SL("instances"), &_3$$4);
 		}
-		zephir_read_property(&_4, this_ptr, SL("instances"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_4, this_ptr, SL("concretions"), PH_NOISY_CC | PH_READONLY);
 		if (Z_TYPE_P(&_4) == IS_NULL) {
 			ZEPHIR_INIT_VAR(&_5$$5);
 			array_init(&_5$$5);
-			zephir_update_property_zval(this_ptr, SL("instances"), &_5$$5);
+			zephir_update_property_zval(this_ptr, SL("concretions"), &_5$$5);
 		}
-		zephir_read_property(&_6, this_ptr, SL("concretions"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_6, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
 		if (Z_TYPE_P(&_6) == IS_NULL) {
 			ZEPHIR_INIT_VAR(&_7$$6);
 			array_init(&_7$$6);
-			zephir_update_property_zval(this_ptr, SL("concretions"), &_7$$6);
+			zephir_update_property_zval(this_ptr, SL("bindings"), &_7$$6);
 		}
-		zephir_read_property(&_8, this_ptr, SL("bindings"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_8, this_ptr, SL("abstractions"), PH_NOISY_CC | PH_READONLY);
 		if (Z_TYPE_P(&_8) == IS_NULL) {
 			ZEPHIR_INIT_VAR(&_9$$7);
 			array_init(&_9$$7);
-			zephir_update_property_zval(this_ptr, SL("bindings"), &_9$$7);
-		}
-		zephir_read_property(&_10, this_ptr, SL("abstractions"), PH_NOISY_CC | PH_READONLY);
-		if (Z_TYPE_P(&_10) == IS_NULL) {
-			ZEPHIR_INIT_VAR(&_11$$8);
-			array_init(&_11$$8);
-			zephir_update_property_zval(this_ptr, SL("abstractions"), &_11$$8);
+			zephir_update_property_zval(this_ptr, SL("abstractions"), &_9$$7);
 		}
 		ZEPHIR_MM_RESTORE();
 		return Z_OBJ_P(this_ptr);
