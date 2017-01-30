@@ -17,7 +17,7 @@ class Container
 
     public function make(class_name)
     {
-        if isset this->instances[class_name] {
+        if is_string(class_name) && isset this->instances[class_name] {
             return this->instances[class_name];
         }
 
@@ -38,7 +38,7 @@ class Container
 
     public function build(class_name)
     {
-        if isset this->instances[class_name] {
+        if is_string(class_name) && isset this->instances[class_name] {
             return this->instances[class_name];
         }
 
